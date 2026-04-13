@@ -21,27 +21,31 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type OrderRequest struct {
+// CreateOrderRequest - запрос на создание заказа
+type CreateOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`  // ID клиента
+	ProductId     string                 `protobuf:"bytes,2,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`     // ID продукта
+	Quantity      int32                  `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`                       // Количество товара
+	TotalPrice    int64                  `protobuf:"varint,4,opt,name=total_price,json=totalPrice,proto3" json:"total_price,omitempty"` // Общая стоимость в центах
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *OrderRequest) Reset() {
-	*x = OrderRequest{}
+func (x *CreateOrderRequest) Reset() {
+	*x = CreateOrderRequest{}
 	mi := &file_order_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *OrderRequest) String() string {
+func (x *CreateOrderRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*OrderRequest) ProtoMessage() {}
+func (*CreateOrderRequest) ProtoMessage() {}
 
-func (x *OrderRequest) ProtoReflect() protoreflect.Message {
+func (x *CreateOrderRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_order_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,29 +57,260 @@ func (x *OrderRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use OrderRequest.ProtoReflect.Descriptor instead.
-func (*OrderRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateOrderRequest.ProtoReflect.Descriptor instead.
+func (*CreateOrderRequest) Descriptor() ([]byte, []int) {
 	return file_order_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *OrderRequest) GetOrderId() string {
+func (x *CreateOrderRequest) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *CreateOrderRequest) GetProductId() string {
+	if x != nil {
+		return x.ProductId
+	}
+	return ""
+}
+
+func (x *CreateOrderRequest) GetQuantity() int32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+func (x *CreateOrderRequest) GetTotalPrice() int64 {
+	if x != nil {
+		return x.TotalPrice
+	}
+	return 0
+}
+
+// Order - информация о заказе
+type Order struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                    // Уникальный ID заказа
+	CustomerId    string                 `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`  // ID клиента
+	ProductId     string                 `protobuf:"bytes,3,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`     // ID продукта
+	Quantity      int32                  `protobuf:"varint,4,opt,name=quantity,proto3" json:"quantity,omitempty"`                       // Количество товара
+	TotalPrice    int64                  `protobuf:"varint,5,opt,name=total_price,json=totalPrice,proto3" json:"total_price,omitempty"` // Общая стоимость в центах
+	Status        string                 `protobuf:"bytes,6,opt,name=status,proto3" json:"status,omitempty"`                            // pending, processing, shipped, delivered, failed
+	CreatedAt     string                 `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`     // Время создания (RFC3339)
+	UpdatedAt     string                 `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`     // Время обновления (RFC3339)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Order) Reset() {
+	*x = Order{}
+	mi := &file_order_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Order) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Order) ProtoMessage() {}
+
+func (x *Order) ProtoReflect() protoreflect.Message {
+	mi := &file_order_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Order.ProtoReflect.Descriptor instead.
+func (*Order) Descriptor() ([]byte, []int) {
+	return file_order_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Order) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Order) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *Order) GetProductId() string {
+	if x != nil {
+		return x.ProductId
+	}
+	return ""
+}
+
+func (x *Order) GetQuantity() int32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+func (x *Order) GetTotalPrice() int64 {
+	if x != nil {
+		return x.TotalPrice
+	}
+	return 0
+}
+
+func (x *Order) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *Order) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *Order) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+// GetOrderRequest - запрос на получение информации о заказе
+type GetOrderRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"` // ID заказа
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOrderRequest) Reset() {
+	*x = GetOrderRequest{}
+	mi := &file_order_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOrderRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOrderRequest) ProtoMessage() {}
+
+func (x *GetOrderRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_order_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOrderRequest.ProtoReflect.Descriptor instead.
+func (*GetOrderRequest) Descriptor() ([]byte, []int) {
+	return file_order_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetOrderRequest) GetOrderId() string {
 	if x != nil {
 		return x.OrderId
 	}
 	return ""
 }
 
+// CreateOrderResponse - ответ на создание заказа
+type CreateOrderResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`                              // Успешно ли создан заказ
+	Order         *Order                 `protobuf:"bytes,2,opt,name=order,proto3" json:"order,omitempty"`                                   // Информация о созданном заказе
+	ErrorMessage  string                 `protobuf:"bytes,3,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"` // Сообщение об ошибке (опционально)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateOrderResponse) Reset() {
+	*x = CreateOrderResponse{}
+	mi := &file_order_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateOrderResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateOrderResponse) ProtoMessage() {}
+
+func (x *CreateOrderResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_order_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateOrderResponse.ProtoReflect.Descriptor instead.
+func (*CreateOrderResponse) Descriptor() ([]byte, []int) {
+	return file_order_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CreateOrderResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *CreateOrderResponse) GetOrder() *Order {
+	if x != nil {
+		return x.Order
+	}
+	return nil
+}
+
+func (x *CreateOrderResponse) GetErrorMessage() string {
+	if x != nil {
+		return x.ErrorMessage
+	}
+	return ""
+}
+
+// OrderStatusUpdate - обновление статуса заказа (для streaming)
 type OrderStatusUpdate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`       // ID заказа
+	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // Новый статус
+	UpdatedAt     string                 `protobuf:"bytes,3,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"` // Время обновления (RFC3339)
+	Message       string                 `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`                      // Дополнительное сообщение
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *OrderStatusUpdate) Reset() {
 	*x = OrderStatusUpdate{}
-	mi := &file_order_proto_msgTypes[1]
+	mi := &file_order_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -87,7 +322,7 @@ func (x *OrderStatusUpdate) String() string {
 func (*OrderStatusUpdate) ProtoMessage() {}
 
 func (x *OrderStatusUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_order_proto_msgTypes[1]
+	mi := &file_order_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -100,7 +335,7 @@ func (x *OrderStatusUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderStatusUpdate.ProtoReflect.Descriptor instead.
 func (*OrderStatusUpdate) Descriptor() ([]byte, []int) {
-	return file_order_proto_rawDescGZIP(), []int{1}
+	return file_order_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *OrderStatusUpdate) GetOrderId() string {
@@ -117,18 +352,110 @@ func (x *OrderStatusUpdate) GetStatus() string {
 	return ""
 }
 
+func (x *OrderStatusUpdate) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *OrderStatusUpdate) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// OrderSubscriptionRequest - запрос на подписку на обновления заказа
+type OrderSubscriptionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"` // ID заказа для отслеживания
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OrderSubscriptionRequest) Reset() {
+	*x = OrderSubscriptionRequest{}
+	mi := &file_order_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OrderSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrderSubscriptionRequest) ProtoMessage() {}
+
+func (x *OrderSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_order_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrderSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*OrderSubscriptionRequest) Descriptor() ([]byte, []int) {
+	return file_order_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *OrderSubscriptionRequest) GetOrderId() string {
+	if x != nil {
+		return x.OrderId
+	}
+	return ""
+}
+
 var File_order_proto protoreflect.FileDescriptor
 
 const file_order_proto_rawDesc = "" +
 	"\n" +
-	"\vorder.proto\x12\border_v1\")\n" +
-	"\fOrderRequest\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\tR\aorderId\"F\n" +
+	"\vorder.proto\x12\border.v1\"\x91\x01\n" +
+	"\x12CreateOrderRequest\x12\x1f\n" +
+	"\vcustomer_id\x18\x01 \x01(\tR\n" +
+	"customerId\x12\x1d\n" +
+	"\n" +
+	"product_id\x18\x02 \x01(\tR\tproductId\x12\x1a\n" +
+	"\bquantity\x18\x03 \x01(\x05R\bquantity\x12\x1f\n" +
+	"\vtotal_price\x18\x04 \x01(\x03R\n" +
+	"totalPrice\"\xea\x01\n" +
+	"\x05Order\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
+	"\vcustomer_id\x18\x02 \x01(\tR\n" +
+	"customerId\x12\x1d\n" +
+	"\n" +
+	"product_id\x18\x03 \x01(\tR\tproductId\x12\x1a\n" +
+	"\bquantity\x18\x04 \x01(\x05R\bquantity\x12\x1f\n" +
+	"\vtotal_price\x18\x05 \x01(\x03R\n" +
+	"totalPrice\x12\x16\n" +
+	"\x06status\x18\x06 \x01(\tR\x06status\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\a \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\b \x01(\tR\tupdatedAt\",\n" +
+	"\x0fGetOrderRequest\x12\x19\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\"{\n" +
+	"\x13CreateOrderResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12%\n" +
+	"\x05order\x18\x02 \x01(\v2\x0f.order.v1.OrderR\x05order\x12#\n" +
+	"\rerror_message\x18\x03 \x01(\tR\ferrorMessage\"\x7f\n" +
 	"\x11OrderStatusUpdate\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x16\n" +
-	"\x06status\x18\x02 \x01(\tR\x06status2\\\n" +
-	"\bOrderAPI\x12P\n" +
-	"\x17SubscribeToOrderUpdates\x12\x16.order_v1.OrderRequest\x1a\x1b.order_v1.OrderStatusUpdate0\x01B2Z0github.com/azhenissov/grpc-contracts-go/order_v1b\x06proto3"
+	"\x06status\x18\x02 \x01(\tR\x06status\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x03 \x01(\tR\tupdatedAt\x12\x18\n" +
+	"\amessage\x18\x04 \x01(\tR\amessage\"5\n" +
+	"\x18OrderSubscriptionRequest\x12\x19\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId2\xf0\x01\n" +
+	"\fOrderService\x12J\n" +
+	"\vCreateOrder\x12\x1c.order.v1.CreateOrderRequest\x1a\x1d.order.v1.CreateOrderResponse\x126\n" +
+	"\bGetOrder\x12\x19.order.v1.GetOrderRequest\x1a\x0f.order.v1.Order\x12\\\n" +
+	"\x17SubscribeToOrderUpdates\x12\".order.v1.OrderSubscriptionRequest\x1a\x1b.order.v1.OrderStatusUpdate0\x01B2Z0github.com/azhenissov/grpc-contracts-go/order_v1b\x06proto3"
 
 var (
 	file_order_proto_rawDescOnce sync.Once
@@ -142,19 +469,28 @@ func file_order_proto_rawDescGZIP() []byte {
 	return file_order_proto_rawDescData
 }
 
-var file_order_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_order_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_order_proto_goTypes = []any{
-	(*OrderRequest)(nil),      // 0: order_v1.OrderRequest
-	(*OrderStatusUpdate)(nil), // 1: order_v1.OrderStatusUpdate
+	(*CreateOrderRequest)(nil),       // 0: order.v1.CreateOrderRequest
+	(*Order)(nil),                    // 1: order.v1.Order
+	(*GetOrderRequest)(nil),          // 2: order.v1.GetOrderRequest
+	(*CreateOrderResponse)(nil),      // 3: order.v1.CreateOrderResponse
+	(*OrderStatusUpdate)(nil),        // 4: order.v1.OrderStatusUpdate
+	(*OrderSubscriptionRequest)(nil), // 5: order.v1.OrderSubscriptionRequest
 }
 var file_order_proto_depIdxs = []int32{
-	0, // 0: order_v1.OrderAPI.SubscribeToOrderUpdates:input_type -> order_v1.OrderRequest
-	1, // 1: order_v1.OrderAPI.SubscribeToOrderUpdates:output_type -> order_v1.OrderStatusUpdate
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: order.v1.CreateOrderResponse.order:type_name -> order.v1.Order
+	0, // 1: order.v1.OrderService.CreateOrder:input_type -> order.v1.CreateOrderRequest
+	2, // 2: order.v1.OrderService.GetOrder:input_type -> order.v1.GetOrderRequest
+	5, // 3: order.v1.OrderService.SubscribeToOrderUpdates:input_type -> order.v1.OrderSubscriptionRequest
+	3, // 4: order.v1.OrderService.CreateOrder:output_type -> order.v1.CreateOrderResponse
+	1, // 5: order.v1.OrderService.GetOrder:output_type -> order.v1.Order
+	4, // 6: order.v1.OrderService.SubscribeToOrderUpdates:output_type -> order.v1.OrderStatusUpdate
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_order_proto_init() }
@@ -168,7 +504,7 @@ func file_order_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_order_proto_rawDesc), len(file_order_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
