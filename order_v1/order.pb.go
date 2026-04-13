@@ -23,7 +23,7 @@ const (
 
 type OrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderId       int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -58,16 +58,16 @@ func (*OrderRequest) Descriptor() ([]byte, []int) {
 	return file_order_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *OrderRequest) GetOrderId() int64 {
+func (x *OrderRequest) GetOrderId() string {
 	if x != nil {
 		return x.OrderId
 	}
-	return 0
+	return ""
 }
 
 type OrderStatusUpdate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderId       int64                  `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -103,11 +103,11 @@ func (*OrderStatusUpdate) Descriptor() ([]byte, []int) {
 	return file_order_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *OrderStatusUpdate) GetOrderId() int64 {
+func (x *OrderStatusUpdate) GetOrderId() string {
 	if x != nil {
 		return x.OrderId
 	}
-	return 0
+	return ""
 }
 
 func (x *OrderStatusUpdate) GetStatus() string {
@@ -123,9 +123,9 @@ const file_order_proto_rawDesc = "" +
 	"\n" +
 	"\vorder.proto\x12\border_v1\")\n" +
 	"\fOrderRequest\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\x03R\aorderId\"F\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\"F\n" +
 	"\x11OrderStatusUpdate\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\x03R\aorderId\x12\x16\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status2\\\n" +
 	"\bOrderAPI\x12P\n" +
 	"\x17SubscribeToOrderUpdates\x12\x16.order_v1.OrderRequest\x1a\x1b.order_v1.OrderStatusUpdate0\x01B2Z0github.com/azhenissov/grpc-contracts-go/order_v1b\x06proto3"
