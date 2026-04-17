@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	PaymentAPI_ProcessPayment_FullMethodName = "/payment_v1.PaymentAPI/ProcessPayment"
+	PaymentAPI_ListPayments_FullMethodName   = "/payment_v1.PaymentAPI/ListPayments"
 )
 
 // PaymentAPIClient is the client API for PaymentAPI service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PaymentAPIClient interface {
 	ProcessPayment(ctx context.Context, in *ProcessPaymentRequest, opts ...grpc.CallOption) (*ProcessPaymentResponse, error)
+	ListPayments(ctx context.Context, in *ListPaymentsRequest, opts ...grpc.CallOption) (*ListPaymentsResponse, error)
 }
 
 type paymentAPIClient struct {
@@ -47,11 +49,22 @@ func (c *paymentAPIClient) ProcessPayment(ctx context.Context, in *ProcessPaymen
 	return out, nil
 }
 
+func (c *paymentAPIClient) ListPayments(ctx context.Context, in *ListPaymentsRequest, opts ...grpc.CallOption) (*ListPaymentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPaymentsResponse)
+	err := c.cc.Invoke(ctx, PaymentAPI_ListPayments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PaymentAPIServer is the server API for PaymentAPI service.
 // All implementations must embed UnimplementedPaymentAPIServer
 // for forward compatibility.
 type PaymentAPIServer interface {
 	ProcessPayment(context.Context, *ProcessPaymentRequest) (*ProcessPaymentResponse, error)
+	ListPayments(context.Context, *ListPaymentsRequest) (*ListPaymentsResponse, error)
 	mustEmbedUnimplementedPaymentAPIServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedPaymentAPIServer struct{}
 
 func (UnimplementedPaymentAPIServer) ProcessPayment(context.Context, *ProcessPaymentRequest) (*ProcessPaymentResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ProcessPayment not implemented")
+}
+func (UnimplementedPaymentAPIServer) ListPayments(context.Context, *ListPaymentsRequest) (*ListPaymentsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPayments not implemented")
 }
 func (UnimplementedPaymentAPIServer) mustEmbedUnimplementedPaymentAPIServer() {}
 func (UnimplementedPaymentAPIServer) testEmbeddedByValue()                    {}
@@ -104,6 +120,24 @@ func _PaymentAPI_ProcessPayment_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentAPI_ListPayments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPaymentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentAPIServer).ListPayments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentAPI_ListPayments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentAPIServer).ListPayments(ctx, req.(*ListPaymentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PaymentAPI_ServiceDesc is the grpc.ServiceDesc for PaymentAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var PaymentAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProcessPayment",
 			Handler:    _PaymentAPI_ProcessPayment_Handler,
+		},
+		{
+			MethodName: "ListPayments",
+			Handler:    _PaymentAPI_ListPayments_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
